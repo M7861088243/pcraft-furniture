@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>P Craft Furniture</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --cream:#F9F3EA;--cream2:#F0E6D6;--pink:#F2B5C0;--pink-d:#E07A90;
+  --sky:#A8D8EA;--sky-d:#5BBAD5;--wood:#6B3F22;--wood-d:#4A2B14;
+  --text:#2E1A0E;--text-lt:#8A7060;--white:#FFFFFF;
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+html,body{height:100%;overflow:hidden;font-family:'Poppins',sans-serif;background:var(--cream);color:var(--text);}
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;transition:opacity .35s,transform .35s;opacity:0;pointer-events:none;transform:translateY(20px);}
+.screen.active{opacity:1;pointer-events:all;transform:translateY(0);}
+
+/* SPLASH */
+#splash{background:linear-gradient(160deg,var(--wood-d) 0%,var(--wood) 60%,#9B5E3A 100%);align-items:center;justify-content:center;}
+.splash-inner{display:flex;flex-direction:column;align-items:center;gap:1.2rem;animation:splashIn .8s ease both;}
+@keyframes splashIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.splash-logo-ring{width:110px;height:110px;border-radius:28px;background:rgba(255,255,255,.1);border:2.5px solid rgba(242,181,192,.5);display:flex;align-items:center;justify-content:center;font-size:3.2rem;}
+.splash-name{font-family:'Playfair Display',serif;font-size:2rem;color:#fff;letter-spacing:1px;text-align:center;}
+.splash-name span{color:var(--pink);}
+.splash-tag{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.splash-bar{width:160px;height:3px;background:rgba(255,255,255,.15);border-radius:99px;overflow:hidden;margin-top:.8rem;}
+.splash-bar-fill{height:100%;background:var(--pink);border-radius:99px;animation:load 2.2s ease forwards;}
+@keyframes load{from{width:0}to{width:100%}}
+.splash-thanks{position:absolute;bottom:50px;font-size:.72rem;color:rgba(255,255,255,.3);letter-spacing:2px;}
+
+/* TOPBAR */
+.topbar{height:60px;background:var(--white);border-bottom:1.5px solid var(--cream2);display:flex;align-items:center;padding:0 1.2rem;flex-shrink:0;box-shadow:0 1px 8px rgba(107,63,34,.06);}
+.topbar-title{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--wood);font-weight:700;}
+.topbar-sub{font-size:.68rem;color:var(--text-lt);}
+
+/* BOTTOM NAV */
+.bnav{height:62px;background:var(--white);border-top:1.5px solid var(--cream2);display:flex;align-items:center;justify-content:space-around;flex-shrink:0;box-shadow:0 -2px 12px rgba(107,63,34,.08);}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;cursor:pointer;padding:8px 4px;}
+.nb:active{transform:scale(.92);}
+.ni{font-size:1.3rem;line-height:1;}
+.nl{font-size:.58rem;font-weight:600;letter-spacing:.5px;color:var(--text-lt);text-transform:uppercase;}
+.nb.on .nl{color:var(--pink-d);}
+.nb.on .ni{filter:drop-shadow(0 0 3px var(--pink));}
+
+.page-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+
+/* HOME */
+.home-hero{background:linear-gradient(160deg,var(--wood-d),var(--wood));padding:2rem 1.4rem 2.5rem;position:relative;overflow:hidden;}
+.home-hero::after{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(168,216,234,.25),transparent 70%);pointer-events:none;}
+.hh-tag{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--sky);margin-bottom:.5rem;}
+.hh-title{font-family:'Playfair Display',serif;font-size:1.85rem;color:#fff;line-height:1.25;margin-bottom:.5rem;}
+.hh-title em{color:var(--pink);font-style:normal;}
+.hh-sub{font-size:.8rem;color:rgba(255,255,255,.6);line-height:1.6;margin-bottom:1.3rem;}
+.hh-btns{display:flex;gap:.7rem;}
+.hbtn{padding:10px 20px;border-radius:50px;font-size:.8rem;font-weight:600;border:none;cursor:pointer;font-family:'Poppins',sans-serif;}
+.hbtn:active{transform:scale(.96);}
+.hbtn-p{background:var(--pink-d);color:#fff;}
+.hbtn-o{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.3);}
+.stats-row{display:flex;background:var(--cream2);border-bottom:1.5px solid var(--pink);}
+.stat{flex:1;padding:.85rem .3rem;text-align:center;border-right:1px solid var(--pink);}
+.stat:last-child{border-right:none;}
+.sn{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--wood);font-weight:700;}
+.sl{font-size:.58rem;color:var(--text-lt);margin-top:1px;}
+.hsec{padding:1.3rem 1.1rem;}
+.hsec-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--wood);margin-bottom:.9rem;}
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+.qcard{background:var(--white);border-radius:16px;padding:1.1rem .9rem;border:1.5px solid var(--cream2);cursor:pointer;transition:border-color .2s,transform .15s;}
+.qcard:active{transform:scale(.96);}
+.qi{font-size:1.7rem;margin-bottom:.4rem;}
+.qt{font-size:.85rem;font-weight:600;color:var(--wood);}
+.qs{font-size:.68rem;color:var(--text-lt);line-height:1.45;margin-top:2px;}
+.qa{color:var(--pink-d);font-size:.85rem;margin-top:.4rem;}
+.div8{height:8px;background:var(--cream2);}
+.wchips{display:flex;flex-direction:column;gap:.65rem;}
+.wchip{background:var(--white);border-radius:13px;padding:.85rem 1rem;display:flex;align-items:center;gap:.85rem;border:1.5px solid var(--cream2);}
+.wi{font-size:1.2rem;width:38px;height:38px;background:linear-gradient(135deg,var(--pink),var(--sky));border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.wt{font-size:.83rem;font-weight:600;color:var(--wood);}
+.ws{font-size:.7rem;color:var(--text-lt);line-height:1.4;}
+
+/* OUR WORK */
+.filter-row{display:flex;gap:.55rem;overflow-x:auto;padding:.9rem 1rem .4rem;-ms-overflow-style:none;scrollbar-width:none;}
+.filter-row::-webkit-scrollbar{display:none;}
+.fchip{flex-shrink:0;padding:6px 15px;border-radius:50px;font-size:.72rem;font-weight:600;border:1.5px solid var(--cream2);background:var(--white);color:var(--text-lt);cursor:pointer;transition:all .2s;}
+.fchip.on{background:var(--wood);color:#fff;border-color:var(--wood);}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;padding:0 1rem 1rem;}
+.fcard{background:var(--white);border-radius:16px;overflow:hidden;border:1.5px solid var(--cream2);cursor:pointer;transition:transform .15s,box-shadow .2s;}
+.fcard:active{transform:scale(.96);}
+.fthumb-wrap{height:140px;overflow:hidden;background:linear-gradient(135deg,var(--cream2),var(--pink));display:flex;align-items:center;justify-content:center;}
+.fthumb-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.fthumb-emoji{font-size:3.2rem;}
+.finfo{padding:.7rem;}
+.fn{font-size:.85rem;font-weight:600;color:var(--wood);}
+.fc2{font-size:.66rem;color:var(--text-lt);margin-top:1px;}
+.ftag{display:inline-block;margin-top:.35rem;background:var(--sky);color:var(--text);font-size:.6rem;font-weight:600;padding:2px 9px;border-radius:50px;}
+
+/* ORDER */
+.dep-banner{background:linear-gradient(135deg,var(--wood-d),var(--wood));border-radius:18px;padding:1.2rem;margin-bottom:1.3rem;color:#fff;}
+.dep-banner h3{font-family:'Playfair Display',serif;font-size:1rem;margin-bottom:.3rem;}
+.dep-banner p{font-size:.72rem;opacity:.75;line-height:1.5;}
+.dep-box{background:rgba(255,255,255,.15);border-radius:12px;padding:.85rem;margin-top:.85rem;}
+.drow{display:flex;justify-content:space-between;align-items:center;margin-bottom:.45rem;}
+.drow:last-child{margin-bottom:0;padding-top:.45rem;border-top:1px solid rgba(255,255,255,.2);}
+.drow label{font-size:.72rem;opacity:.8;}
+.drow .dv{font-size:.88rem;font-weight:700;}
+.drow.dtotal .dv{color:var(--pink);font-size:1rem;}
+.binput{width:100%;background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.3);border-radius:10px;padding:8px 12px;color:#fff;font-family:'Poppins',sans-serif;font-size:.85rem;outline:none;}
+.binput::placeholder{color:rgba(255,255,255,.45);}
+.oform{display:flex;flex-direction:column;gap:.9rem;}
+.flabel{font-size:.72rem;font-weight:600;color:var(--wood);margin-bottom:.25rem;display:block;}
+.finput,.fsel,.ftarea{width:100%;background:var(--white);border:1.5px solid var(--cream2);border-radius:11px;padding:10px 13px;font-family:'Poppins',sans-serif;font-size:.83rem;color:var(--text);outline:none;transition:border-color .2s;}
+.finput:focus,.fsel:focus,.ftarea:focus{border-color:var(--pink-d);}
+.ftarea{resize:none;height:85px;}
+.frow2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+.wasub{width:100%;padding:13px;background:#25D366;color:#fff;border:none;border-radius:50px;font-family:'Poppins',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.4rem;margin-top:.3rem;}
+.wasub:active{opacity:.85;}
+
+/* AI CHAT */
+.ai-intro{padding:.9rem 1.1rem;background:linear-gradient(135deg,var(--cream2),var(--white));border-bottom:1.5px solid var(--cream2);flex-shrink:0;}
+.ai-row{display:flex;align-items:center;gap:.85rem;}
+.ai-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--sky));display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.ai-h{font-size:.88rem;font-weight:600;color:var(--wood);}
+.ai-p{font-size:.68rem;color:var(--text-lt);line-height:1.4;}
+.sugs{display:flex;gap:.55rem;overflow-x:auto;padding:.7rem 1rem;border-bottom:1px solid var(--cream2);flex-shrink:0;-ms-overflow-style:none;scrollbar-width:none;}
+.sugs::-webkit-scrollbar{display:none;}
+.sug{flex-shrink:0;background:var(--white);border:1.5px solid var(--pink);border-radius:50px;padding:5px 13px;font-size:.7rem;font-weight:500;color:var(--wood);cursor:pointer;white-space:nowrap;}
+.sug:active{background:var(--pink-d);color:#fff;}
+.chat-msgs{flex:1;overflow-y:auto;padding:.9rem 1rem;display:flex;flex-direction:column;gap:.8rem;}
+.msg{max-width:85%;}
+.msg.u{align-self:flex-end;display:flex;flex-direction:column;align-items:flex-end;}
+.msg.b{align-self:flex-start;display:flex;flex-direction:column;align-items:flex-start;}
+.bubble{padding:.7rem .95rem;border-radius:17px;font-size:.81rem;line-height:1.6;}
+.msg.u .bubble{background:var(--wood);color:#fff;border-bottom-right-radius:4px;}
+.msg.b .bubble{background:var(--white);color:var(--text);border:1.5px solid var(--cream2);border-bottom-left-radius:4px;}
+.mtime{font-size:.58rem;color:var(--text-lt);margin-top:2px;}
+.msg-img{max-width:200px;border-radius:12px;margin-bottom:4px;border:2px solid var(--cream2);}
+.typing{display:flex;gap:4px;padding:.7rem .95rem;background:var(--white);border:1.5px solid var(--cream2);border-radius:17px;border-bottom-left-radius:4px;align-self:flex-start;}
+.td{width:7px;height:7px;border-radius:50%;background:var(--text-lt);animation:blink 1.2s infinite;}
+.td:nth-child(2){animation-delay:.2s;}
+.td:nth-child(3){animation-delay:.4s;}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+
+/* CHAT INPUT BAR */
+.chat-bar{padding:.65rem .8rem;background:var(--white);border-top:1.5px solid var(--cream2);display:flex;gap:.45rem;align-items:flex-end;flex-shrink:0;}
+.chat-in{flex:1;background:var(--cream);border:1.5px solid var(--cream2);border-radius:20px;padding:9px 14px;font-family:'Poppins',sans-serif;font-size:.83rem;color:var(--text);outline:none;resize:none;max-height:90px;}
+.chat-in:focus{border-color:var(--pink-d);}
+.cbtn{width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.cbtn:active{transform:scale(.9);}
+.cbtn-cam{background:var(--cream2);color:var(--wood);}
+.cbtn-send{background:var(--pink-d);color:#fff;}
+
+/* img preview in bar */
+.img-preview-bar{padding:.5rem 1rem;background:var(--white);border-top:1px solid var(--cream2);display:none;align-items:center;gap:.6rem;flex-shrink:0;}
+.img-preview-bar.show{display:flex;}
+.img-prev-thumb{width:48px;height:48px;border-radius:10px;object-fit:cover;border:1.5px solid var(--pink);}
+.img-prev-name{font-size:.72rem;color:var(--text-lt);flex:1;}
+.img-prev-del{background:none;border:none;color:var(--pink-d);font-size:1.1rem;cursor:pointer;}
+
+/* CONTACT */
+.chero{background:linear-gradient(135deg,var(--wood-d),var(--wood));border-radius:18px;padding:1.3rem;margin-bottom:1.2rem;text-align:center;color:#fff;}
+.chero h3{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:.35rem;}
+.chero p{font-size:.75rem;opacity:.72;line-height:1.55;}
+.ccards{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.2rem;}
+.ccard{background:var(--white);border-radius:15px;padding:.95rem 1.1rem;display:flex;align-items:center;gap:.9rem;border:1.5px solid var(--cream2);cursor:pointer;}
+.ccard:active{opacity:.8;}
+.cci{font-size:1.3rem;width:42px;height:42px;background:linear-gradient(135deg,var(--pink),var(--sky));border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cct{font-size:.85rem;font-weight:600;color:var(--wood);}
+.ccs{font-size:.7rem;color:var(--text-lt);}
+.cca{margin-left:auto;color:var(--text-lt);}
+.locbox{background:var(--cream2);border-radius:15px;padding:1.1rem;border:1.5px solid var(--pink);}
+.locbox h4{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--wood);margin-bottom:.75rem;}
+.locrow{display:flex;align-items:flex-start;gap:.65rem;margin-bottom:.55rem;}
+.locrow:last-child{margin-bottom:0;}
+.locrow p{font-size:.78rem;color:var(--text);line-height:1.45;}
+
+/* OVERLAY */
+#ov{position:fixed;inset:0;z-index:200;background:rgba(46,26,14,.5);opacity:0;pointer-events:none;transition:opacity .3s;}
+#ov.show{opacity:1;pointer-events:all;}
+.osheet{position:absolute;bottom:0;left:0;right:0;background:var(--cream);border-radius:22px 22px 0 0;padding:1.4rem 1.2rem;transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);max-height:82vh;overflow-y:auto;}
+#ov.show .osheet{transform:translateY(0);}
+.handle{width:38px;height:4px;background:var(--cream2);border-radius:99px;margin:0 auto 1.1rem;}
+.sh-img{width:100%;height:180px;object-fit:cover;border-radius:16px;margin-bottom:1rem;}
+.sh-name{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--wood);}
+.sh-cat{font-size:.72rem;color:var(--text-lt);margin-bottom:.9rem;}
+.sh-close{position:absolute;top:1.2rem;right:1.2rem;width:30px;height:30px;border-radius:50%;background:var(--cream2);border:none;cursor:pointer;font-size:.9rem;}
+
+/* CAM MENU */
+#cam-menu{position:fixed;inset:0;z-index:300;background:rgba(46,26,14,.5);opacity:0;pointer-events:none;transition:opacity .2s;display:flex;align-items:flex-end;}
+#cam-menu.show{opacity:1;pointer-events:all;}
+.cam-sheet{width:100%;background:var(--white);border-radius:22px 22px 0 0;padding:1.2rem;transform:translateY(100%);transition:transform .3s;}
+#cam-menu.show .cam-sheet{transform:translateY(0);}
+.cam-title{font-size:.8rem;font-weight:600;color:var(--text-lt);text-align:center;margin-bottom:1rem;letter-spacing:1px;text-transform:uppercase;}
+.cam-opts{display:flex;gap:.8rem;justify-content:center;margin-bottom:1rem;}
+.cam-opt{flex:1;background:var(--cream);border:1.5px solid var(--cream2);border-radius:16px;padding:1rem .5rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;cursor:pointer;max-width:140px;}
+.cam-opt:active{background:var(--cream2);}
+.cam-opt-icon{font-size:2rem;}
+.cam-opt-label{font-size:.75rem;font-weight:600;color:var(--wood);}
+.cam-cancel{width:100%;padding:11px;background:var(--cream2);border:none;border-radius:12px;font-family:'Poppins',sans-serif;font-size:.85rem;font-weight:600;color:var(--text-lt);cursor:pointer;}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div class="screen active" id="splash">
+  <div class="splash-inner">
+    <div class="splash-logo-ring">🛋️</div>
+    <div class="splash-name">P <span>Craft</span> Furniture</div>
+    <div class="splash-tag">Crafted with Care · Built for Life</div>
+    <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+  </div>
+  <div class="splash-thanks">Thank you for visiting ✦</div>
+</div>
+
+<!-- HOME -->
+<div class="screen" id="home">
+  <div class="page-body">
+    <div class="home-hero">
+      <div class="hh-tag">✦ Custom Handcrafted Furniture</div>
+      <h1 class="hh-title">Your Dream <em>Space,</em><br/>Our Finest Craft</h1>
+      <p class="hh-sub">Direct from workshop to your home — premium custom furniture at honest prices.</p>
+      <div class="hh-btns">
+        <button class="hbtn hbtn-p" onclick="goTo('ourwork')">View Our Work</button>
+        <button class="hbtn hbtn-o" onclick="goTo('order')">Order Now</button>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><div class="sn">500+</div><div class="sl">Happy Customers</div></div>
+      <div class="stat"><div class="sn">10+</div><div class="sl">Years Craft</div></div>
+      <div class="stat"><div class="sn">100%</div><div class="sl">Custom Made</div></div>
+    </div>
+    <div class="hsec">
+      <div class="hsec-title">What can we do for you?</div>
+      <div class="qgrid">
+        <div class="qcard" onclick="goTo('ourwork')"><div class="qi">🖼️</div><div class="qt">Our Work</div><div class="qs">Browse furniture photos & order</div><div class="qa">→</div></div>
+        <div class="qcard" onclick="goTo('order')"><div class="qi">📋</div><div class="qt">Place Order</div><div class="qs">20% deposit, custom design</div><div class="qa">→</div></div>
+        <div class="qcard" onclick="goTo('aifriend')"><div class="qi">🤖</div><div class="qt">AI Friend</div><div class="qs">Photo upload + colour suggestions</div><div class="qa">→</div></div>
+        <div class="qcard" onclick="goTo('contact')"><div class="qi">💬</div><div class="qt">Contact Us</div><div class="qs">WhatsApp, call, or visit</div><div class="qa">→</div></div>
+      </div>
+    </div>
+    <div class="div8"></div>
+    <div class="hsec">
+      <div class="hsec-title">Why P Craft?</div>
+      <div class="wchips">
+        <div class="wchip"><div class="wi">🪵</div><div><div class="wt">Premium Wood Only</div><div class="ws">No shortcuts — quality material, always</div></div></div>
+        <div class="wchip"><div class="wi">💰</div><div><div class="wt">Factory Direct Price</div><div class="ws">No middlemen, honest pricing</div></div></div>
+        <div class="wchip"><div class="wi">✂️</div><div><div class="wt">100% Custom Built</div><div class="ws">Your size, your design, your choice</div></div></div>
+        <div class="wchip"><div class="wi">🚚</div><div><div class="wt">On-Time Delivery</div><div class="ws">We respect your time, always</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="bnav">
+    <button class="nb on" onclick="goTo('home')"><span class="ni">🏠</span><span class="nl">Home</span></button>
+    <button class="nb" onclick="goTo('ourwork')"><span class="ni">🖼️</span><span class="nl">Our Work</span></button>
+    <button class="nb" onclick="goTo('order')"><span class="ni">📋</span><span class="nl">Order</span></button>
+    <button class="nb" onclick="goTo('aifriend')"><span class="ni">🤖</span><span class="nl">AI Friend</span></button>
+    <button class="nb" onclick="goTo('contact')"><span class="ni">💬</span><span class="nl">Contact</span></button>
+  </div>
+</div>
+
+<!-- OUR WORK -->
+<div class="screen" id="ourwork">
+  <div class="topbar"><div><div class="topbar-title">Our Work</div><div class="topbar-sub">Tap any photo to order</div></div></div>
+  <div class="page-body">
+    <div class="filter-row">
+      <div class="fchip on" onclick="filterWork(this,'all')">All</div>
+      <div class="fchip" onclick="filterWork(this,'living')">Living Room</div>
+      <div class="fchip" onclick="filterWork(this,'bedroom')">Bedroom</div>
+      <div class="fchip" onclick="filterWork(this,'office')">Office</div>
+      <div class="fchip" onclick="filterWork(this,'kitchen')">Kitchen</div>
+      <div class="fchip" onclick="filterWork(this,'storage')">Storage</div>
+    </div>
+    <div class="fgrid" id="fgrid"></div>
+  </div>
+  <div class="bnav">
+    <button class="nb" onclick="goTo('home')"><span class="ni">🏠</span><span class="nl">Home</span></button>
+    <button class="nb on" onclick="goTo('ourwork')"><span class="ni">🖼️</span><span class="nl">Our Work</span></button>
+    <button class="nb" onclick="goTo('order')"><span class="ni">📋</span><span class="nl">Order</span></button>
+    <button class="nb" onclick="goTo('aifriend')"><span class="ni">🤖</span><span class="nl">AI Friend</span></button>
+    <button class="nb" onclick="goTo('contact')"><span class="ni">💬</span><span class="nl">Contact</span></button>
+  </div>
+</div>
+
+<!-- ORDER -->
+<div class="screen" id="order">
+  <div class="topbar"><div><div class="topbar-title">Place Order</div><div class="topbar-sub">Only 20% deposit to start</div></div></div>
+  <div class="page-body" style="padding:1.2rem;">
+    <div class="dep-banner">
+      <h3>💳 Deposit Calculator</h3>
+      <p>Enter your budget — we'll calculate your 20% booking amount.</p>
+      <div class="dep-box">
+        <div class="drow"><label>Total Budget (₹)</label><input class="binput" type="number" id="bud" placeholder="e.g. 25000" oninput="calcDep()"/></div>
+        <div class="drow"><label>20% Deposit</label><span class="dv" id="dv">₹ —</span></div>
+        <div class="drow dtotal"><label>Remaining on Delivery</label><span class="dv" id="rv">₹ —</span></div>
+      </div>
+    </div>
+    <div class="oform">
+      <div class="frow2">
+        <div><label class="flabel">Your Name</label><input class="finput" type="text" id="on" placeholder="Full name"/></div>
+        <div><label class="flabel">Phone</label><input class="finput" type="tel" id="op" placeholder="+91 XXXXX"/></div>
+      </div>
+      <div><label class="flabel">Furniture Type</label>
+        <select class="fsel" id="ot">
+          <option value="" disabled selected>Select type</option>
+          <option>Sofa / Seating</option><option>Bedroom Set</option><option>Wardrobe</option>
+          <option>Dining Table</option><option>Office Desk / Chair</option><option>Kitchen Cabinet</option>
+          <option>TV Unit / Wall Shelf</option><option>Wooden Door</option><option>Other / Custom</option>
+        </select>
+      </div>
+      <div><label class="flabel">Size / Dimensions</label><input class="finput" type="text" id="os" placeholder="e.g. 6×4 ft, or 'as per room'"/></div>
+      <div><label class="flabel">Design Details</label><textarea class="ftarea" id="od" placeholder="Colour, style, material, any reference..."></textarea></div>
+      <button class="wasub" onclick="submitOrder()">💬 Send Order on WhatsApp</button>
+    </div>
+  </div>
+  <div class="bnav">
+    <button class="nb" onclick="goTo('home')"><span class="ni">🏠</span><span class="nl">Home</span></button>
+    <button class="nb" onclick="goTo('ourwork')"><span class="ni">🖼️</span><span class="nl">Our Work</span></button>
+    <button class="nb on" onclick="goTo('order')"><span class="ni">📋</span><span class="nl">Order</span></button>
+    <button class="nb" onclick="goTo('aifriend')"><span class="ni">🤖</span><span class="nl">AI Friend</span></button>
+    <button class="nb" onclick="goTo('contact')"><span class="ni">💬</span><span class="nl">Contact</span></button>
+  </div>
+</div>
+
+<!-- AI FRIEND -->
+<div class="screen" id="aifriend" style="overflow:hidden;">
+  <div class="topbar"><div><div class="topbar-title">AI Furniture Friend</div><div class="topbar-sub">Photo upload + colour suggestions</div></div></div>
+  <div class="ai-intro">
+    <div class="ai-row">
+      <div class="ai-av">🤖</div>
+      <div><div class="ai-h">P Craft AI Friend</div><div class="ai-p">Apne room ki photo bhejo ya colour batao — best furniture suggestion dunga! 📸</div></div>
+    </div>
+  </div>
+  <div class="sugs">
+    <div class="sug" onclick="askSug(this)">White walls, konsa sofa?</div>
+    <div class="sug" onclick="askSug(this)">Bedroom ke liye best wood?</div>
+    <div class="sug" onclick="askSug(this)">Modern office desk style</div>
+    <div class="sug" onclick="askSug(this)">Kitchen colour ideas</div>
+    <div class="sug" onclick="askSug(this)">Small room furniture tips</div>
+  </div>
+  <div class="chat-msgs" id="cmsgs"></div>
+
+  <!-- Image preview bar -->
+  <div class="img-preview-bar" id="img-prev-bar">
+    <img class="img-prev-thumb" id="img-prev-thumb" src="" alt=""/>
+    <span class="img-prev-name" id="img-prev-name">Photo ready</span>
+    <button class="img-prev-del" onclick="clearImg()">✕</button>
+  </div>
+
+  <div class="chat-bar">
+    <button class="cbtn cbtn-cam" onclick="openCamMenu()">📷</button>
+    <textarea class="chat-in" id="cin" placeholder="Message likho ya photo bhejo..." rows="1" onkeydown="chatKey(event)"></textarea>
+    <button class="cbtn cbtn-send" onclick="sendChat()">➤</button>
+  </div>
+
+  <!-- Hidden file inputs -->
+  <input type="file" id="file-cam" accept="image/*" capture="environment" style="display:none" onchange="onImgSelected(this)"/>
+  <input type="file" id="file-gal" accept="image/*" style="display:none" onchange="onImgSelected(this)"/>
+
+  <div class="bnav">
+    <button class="nb" onclick="goTo('home')"><span class="ni">🏠</span><span class="nl">Home</span></button>
+    <button class="nb" onclick="goTo('ourwork')"><span class="ni">🖼️</span><span class="nl">Our Work</span></button>
+    <button class="nb" onclick="goTo('order')"><span class="ni">📋</span><span class="nl">Order</span></button>
+    <button class="nb on" onclick="goTo('aifriend')"><span class="ni">🤖</span><span class="nl">AI Friend</span></button>
+    <button class="nb" onclick="goTo('contact')"><span class="ni">💬</span><span class="nl">Contact</span></button>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="screen" id="contact">
+  <div class="topbar"><div><div class="topbar-title">Contact Us</div><div class="topbar-sub">We reply within 1 hour</div></div></div>
+  <div class="page-body" style="padding:1.2rem;">
+    <div class="chero"><h3>Let's Build Together 🛋️</h3><p>Reach out on WhatsApp for fastest response. We visit your home for measurements too!</p></div>
+    <div class="ccards">
+      <div class="ccard" onclick="window.open('https://wa.me/917861088243?text=Hello%20P%20Craft%20Furniture!')">
+        <div class="cci">💬</div><div><div class="cct">WhatsApp Us</div><div class="ccs">+91 78610 88243 — Fastest reply</div></div><div class="cca">→</div>
+      </div>
+      <div class="ccard" onclick="window.open('tel:+917861088243')">
+        <div class="cci">📞</div><div><div class="cct">Call Us</div><div class="ccs">+91 78610 88243</div></div><div class="cca">→</div>
+      </div>
+      <div class="ccard" onclick="window.open('https://instagram.com/')">
+        <div class="cci">📸</div><div><div class="cct">Instagram</div><div class="ccs">More furniture photos</div></div><div class="cca">→</div>
+      </div>
+    </div>
+    <div class="locbox">
+      <h4>📍 Find Us</h4>
+      <div class="locrow"><span>🏘️</span><p>Vaso, Kheda District, Gujarat</p></div>
+      <div class="locrow"><span>🕐</span><p>Monday – Saturday, 9 AM to 7 PM</p></div>
+      <div class="locrow"><span>🚗</span><p>Home visit available for measurements</p></div>
+    </div>
+  </div>
+  <div class="bnav">
+    <button class="nb" onclick="goTo('home')"><span class="ni">🏠</span><span class="nl">Home</span></button>
+    <button class="nb" onclick="goTo('ourwork')"><span class="ni">🖼️</span><span class="nl">Our Work</span></button>
+    <button class="nb" onclick="goTo('order')"><span class="ni">📋</span><span class="nl">Order</span></button>
+    <button class="nb" onclick="goTo('aifriend')"><span class="ni">🤖</span><span class="nl">AI Friend</span></button>
+    <button class="nb on" onclick="goTo('contact')"><span class="ni">💬</span><span class="nl">Contact</span></button>
+  </div>
+</div>
+
+<!-- ORDER OVERLAY -->
+<div id="ov" onclick="closeOv(event)">
+  <div class="osheet">
+    <div class="handle"></div>
+    <button class="sh-close" onclick="closeOvBtn()">✕</button>
+    <img class="sh-img" id="sh-img" src="" alt=""/>
+    <div class="sh-name" id="shnm">Sofa</div>
+    <div class="sh-cat" id="shct">Living Room</div>
+    <p style="font-size:.8rem;color:var(--text-lt);margin-bottom:1.1rem;line-height:1.6;">Interested in this? WhatsApp karo — exact pricing, designs & delivery timeline batayenge!</p>
+    <button class="wasub" onclick="orderFromWork()">💬 Order This on WhatsApp</button>
+  </div>
+</div>
+
+<!-- CAMERA MENU -->
+<div id="cam-menu" onclick="closeCamMenu(event)">
+  <div class="cam-sheet">
+    <div class="cam-title">Photo kaise bhejni hai?</div>
+    <div class="cam-opts">
+      <div class="cam-opt" onclick="openCamera()">
+        <div class="cam-opt-icon">📸</div>
+        <div class="cam-opt-label">Camera se Click karo</div>
+      </div>
+      <div class="cam-opt" onclick="openGallery()">
+        <div class="cam-opt-icon">🖼️</div>
+        <div class="cam-opt-label">Gallery se Choose karo</div>
+      </div>
+    </div>
+    <button class="cam-cancel" onclick="closeCamMenuBtn()">Cancel</button>
+  </div>
+</div>
+
+<script>
+const FURN=[
+  // Living Room - 4 items
+  {id:1,name:'L-Shape Sofa',cat:'living',cl:'Living Room',img:'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Custom Size',emoji:'🛋️'},
+  {id:2,name:'3-Seater Sofa',cat:'living',cl:'Living Room',img:'https://images.pexels.com/photos/276583/pexels-photo-276583.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Fabric Choice',emoji:'🛋️'},
+  {id:3,name:'Diwan Sofa',cat:'living',cl:'Living Room',img:'https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Traditional',emoji:'🛋️'},
+  {id:4,name:'Coffee Table',cat:'living',cl:'Living Room',img:'https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Solid Wood',emoji:'🪵'},
+  // Bedroom - 4 items
+  {id:5,name:'King Size Bed',cat:'bedroom',cl:'Bedroom',img:'https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'With Storage',emoji:'🛏️'},
+  {id:6,name:'Wardrobe 3-Door',cat:'bedroom',cl:'Bedroom',img:'https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Mirror Option',emoji:'🚪'},
+  {id:7,name:'Dressing Table',cat:'bedroom',cl:'Bedroom',img:'https://images.pexels.com/photos/2062431/pexels-photo-2062431.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Custom',emoji:'🪞'},
+  {id:8,name:'Side Table',cat:'bedroom',cl:'Bedroom',img:'https://images.pexels.com/photos/1034584/pexels-photo-1034584.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Bedside',emoji:'🪵'},
+  // Office - 3 items
+  {id:9,name:'Office Desk',cat:'office',cl:'Office',img:'https://images.pexels.com/photos/667838/pexels-photo-667838.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Cable Mgmt',emoji:'🖥️'},
+  {id:10,name:'Study Table',cat:'office',cl:'Office',img:'https://images.pexels.com/photos/3785927/pexels-photo-3785927.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Spacious',emoji:'📚'},
+  {id:11,name:'Reception Counter',cat:'office',cl:'Office',img:'https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Premium',emoji:'🏢'},
+  // Kitchen - 3 items
+  {id:12,name:'Modular Kitchen',cat:'kitchen',cl:'Kitchen',img:'https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Full Set',emoji:'🍳'},
+  {id:13,name:'Dining Table 6-Seat',cat:'kitchen',cl:'Kitchen',img:'https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Solid Wood',emoji:'🍽️'},
+  {id:14,name:'Kitchen Cabinet',cat:'kitchen',cl:'Kitchen',img:'https://images.pexels.com/photos/3214064/pexels-photo-3214064.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Custom Size',emoji:'🗄️'},
+  // Storage - 3 items
+  {id:15,name:'TV Unit',cat:'storage',cl:'Storage',img:'https://images.pexels.com/photos/1571458/pexels-photo-1571458.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Wall Mount',emoji:'📺'},
+  {id:16,name:'Bookshelf',cat:'storage',cl:'Storage',img:'https://images.pexels.com/photos/2177482/pexels-photo-2177482.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Custom Size',emoji:'📚'},
+  {id:17,name:'Storage Cabinet',cat:'storage',cl:'Storage',img:'https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=400',tag:'Multi-use',emoji:'🗄️'},
+];
+
+let curFilter='all', selFurn=null, chatHist=[], chatReady=false, pendingImg=null;
+
+setTimeout(()=>goTo('home'), 2500);
+
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id==='ourwork') renderGrid(curFilter);
+  if(id==='aifriend'&&!chatReady){chatReady=true;addBot("Namaste! 🙏 Main P Craft ka AI Friend hoon.\n\nAapke room ki photo bhejo ya wall colour batao — main perfect furniture colour combination suggest karunga! 🛋️✨\n\nCamera 📷 button dabao photo bhejne ke liye!");}
+}
+
+function renderGrid(f){
+  const g=document.getElementById('fgrid');
+  const items=f==='all'?FURN:FURN.filter(x=>x.cat===f);
+  g.innerHTML=items.map(x=>`
+    <div class="fcard" onclick="openOv(${x.id})">
+      <div class="fthumb-wrap">
+        <img src="${x.img}" alt="${x.name}" loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="fthumb-emoji" style="display:none">${x.emoji}</div>
+      </div>
+      <div class="finfo">
+        <div class="fn">${x.name}</div>
+        <div class="fc2">${x.cl}</div>
+        <span class="ftag">${x.tag}</span>
+      </div>
+    </div>`).join('');
+}
+
+function filterWork(el,f){
+  document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on'); curFilter=f; renderGrid(f);
+}
+
+function openOv(id){
+  selFurn=FURN.find(f=>f.id===id);
+  const img=document.getElementById('sh-img');
+  img.src=selFurn.img;
+  img.onerror=()=>{img.style.display='none';};
+  img.style.display='block';
+  document.getElementById('shnm').textContent=selFurn.name;
+  document.getElementById('shct').textContent=selFurn.cl;
+  document.getElementById('ov').classList.add('show');
+}
+function closeOv(e){if(e.target===document.getElementById('ov'))closeOvBtn();}
+function closeOvBtn(){document.getElementById('ov').classList.remove('show');}
+function orderFromWork(){
+  if(!selFurn)return;
+  window.open(`https://wa.me/917861088243?text=Hello%20P%20Craft!%0AMain%20interested%20hoon%3A%20*${encodeURIComponent(selFurn.name)}*%20(${encodeURIComponent(selFurn.cl)})%0APlease%20pricing%20aur%20details%20batao.`,'_blank');
+}
+
+function calcDep(){
+  const b=parseFloat(document.getElementById('bud').value)||0;
+  document.getElementById('dv').textContent=b?`₹ ${(b*.2).toLocaleString('en-IN')}`:'₹ —';
+  document.getElementById('rv').textContent=b?`₹ ${(b*.8).toLocaleString('en-IN')}`:'₹ —';
+}
+
+function submitOrder(){
+  const n=document.getElementById('on').value||'Customer';
+  const p=document.getElementById('op').value||'';
+  const t=document.getElementById('ot').value||'Custom';
+  const s=document.getElementById('os').value||'To discuss';
+  const d=document.getElementById('od').value||'';
+  const b=document.getElementById('bud').value;
+  const dep=b?`₹${(parseFloat(b)*.2).toLocaleString('en-IN')}`:'To discuss';
+  const msg=`🛋️ *New Order — P Craft Furniture*%0A%0A👤 ${n}%0A📞 ${p}%0A🪑 ${t}%0A📐 ${s}%0A💰 Budget: ${b?'₹'+parseFloat(b).toLocaleString('en-IN'):'TBD'}%0A💳 Deposit (20%%): ${dep}%0A📝 ${d}`;
+  window.open(`https://wa.me/917861088243?text=${msg}`,'_blank');
+}
+
+// ── CAMERA MENU ──
+function openCamMenu(){document.getElementById('cam-menu').classList.add('show');}
+function closeCamMenu(e){if(e.target===document.getElementById('cam-menu'))closeCamMenuBtn();}
+function closeCamMenuBtn(){document.getElementById('cam-menu').classList.remove('show');}
+function openCamera(){closeCamMenuBtn();document.getElementById('file-cam').click();}
+function openGallery(){closeCamMenuBtn();document.getElementById('file-gal').click();}
+
+function onImgSelected(input){
+  const file=input.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    pendingImg={data:e.target.result,name:file.name};
+    document.getElementById('img-prev-thumb').src=e.target.result;
+    document.getElementById('img-prev-name').textContent=file.name;
+    document.getElementById('img-prev-bar').classList.add('show');
+  };
+  reader.readAsDataURL(file);
+  input.value='';
+}
+
+function clearImg(){
+  pendingImg=null;
+  document.getElementById('img-prev-bar').classList.remove('show');
+}
+
+// ── AI CHAT ──
+const SYS=`You are "P Craft AI Friend", a friendly furniture and interior design advisor for P Craft Furniture — a custom furniture workshop in Vaso, Kheda, Gujarat, India.
+
+Your job: Help customers choose the right furniture colours, styles, and combinations.
+
+When the customer sends a photo of their room: Analyze the room's wall colour, flooring, lighting, and existing decor. Then suggest specific furniture colours, materials, and styles that would look beautiful in that space.
+
+Always:
+- Respond in Hinglish (mix of Hindi and English — casual, warm, friendly)
+- Give specific colour combo names (e.g. "Walnut Brown sofa + Cream cushions")
+- Mention P Craft can make any custom design in any size
+- Keep answers short (4-6 lines) and practical
+- End by asking if they want to place an order`;
+
+async function callAI(userText, imgData){
+  let content;
+  if(imgData){
+    const base64=imgData.split(',')[1];
+    const mime=imgData.split(';')[0].split(':')[1];
+    content=[
+      {type:'image',source:{type:'base64',media_type:mime,data:base64}},
+      {type:'text',text:userText||'Mere room ki photo dekho aur best furniture colour suggest karo!'}
+    ];
+  } else {
+    content=userText;
+  }
+  chatHist.push({role:'user',content});
+  // For history without images (to keep tokens low)
+  const msgs=chatHist.map((m,i)=>{
+    if(i<chatHist.length-1 && Array.isArray(m.content)){
+      return {role:m.role,content:m.content.filter(c=>c.type==='text').map(c=>c.text).join(' ')};
+    }
+    return m;
+  });
+  const r=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,system:SYS,messages:msgs})
+  });
+  const d=await r.json();
+  const rep=d.content?.[0]?.text||'Sorry, ek baar dobara try karo!';
+  chatHist.push({role:'assistant',content:rep});
+  return rep;
+}
+
+function now(){return new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});}
+
+function addUser(text, imgSrc){
+  const m=document.getElementById('cmsgs');
+  let html='<div class="msg u">';
+  if(imgSrc) html+=`<img class="msg-img" src="${imgSrc}" alt="room photo"/>`;
+  if(text) html+=`<div class="bubble">${text}</div>`;
+  html+=`<div class="mtime">${now()}</div></div>`;
+  m.innerHTML+=html;
+  m.scrollTop=m.scrollHeight;
+}
+
+function addBot(t){
+  const m=document.getElementById('cmsgs');
+  m.innerHTML+=`<div class="msg b"><div class="bubble">${t.replace(/\n/g,'<br/>')}</div><div class="mtime">${now()}</div></div>`;
+  m.scrollTop=m.scrollHeight;
+}
+
+function showTyp(){
+  const m=document.getElementById('cmsgs');
+  m.innerHTML+=`<div class="typing" id="typ"><div class="td"></div><div class="td"></div><div class="td"></div></div>`;
+  m.scrollTop=m.scrollHeight;
+}
+function hideTyp(){document.getElementById('typ')?.remove();}
+
+async function sendChat(){
+  const el=document.getElementById('cin');
+  const text=el.value.trim();
+  const img=pendingImg;
+  if(!text && !img) return;
+  el.value='';
+  addUser(text, img?.data);
+  clearImg();
+  showTyp();
+  try{
+    const r=await callAI(text, img?.data);
+    hideTyp();
+    addBot(r);
+  } catch(e){
+    hideTyp();
+    addBot('Oops! Network issue. Please retry. 🙏');
+  }
+}
+
+function chatKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}}
+function askSug(el){document.getElementById('cin').value=el.textContent;sendChat();}
+</script>
+</body>
+</html>
